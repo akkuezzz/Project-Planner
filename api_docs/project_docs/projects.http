@@ -1,0 +1,112 @@
+### listing all projects
+GET http://127.0.0.1:8000/projects/
+
+
+### create a project
+POST http://127.0.0.1:8000/projects/
+Content-Type: multipart/form-data ; boundary=abc
+
+--abc
+Content-Disposition: form-data; name="title"
+
+MediCare - Hospital Appointment and Patient Management System
+--abc
+Content-Disposition: form-data; name="description"
+
+
+<h2>About MediCare</h2>
+
+<p>
+    <strong>MediCare</strong> is a web-based Hospital Appointment and Patient Management System developed using Python and Django. It provides a centralized platform for patients, doctors, and hospital administrators to manage appointments, patient records, doctor schedules, and medical information efficiently.
+</p>
+
+<h3>Project Objectives</h3>
+
+<ul>
+    <li>Provide an online platform for patients to book doctor appointments.</li>
+    <li>Allow doctors to manage their schedules and view assigned appointments.</li>
+    <li>Maintain patient profiles and appointment histories.</li>
+    <li>Help administrators manage doctors, departments, patients, and appointments.</li>
+    <li>Reduce manual paperwork and simplify hospital appointment management.</li>
+    <li>Improve communication and coordination between patients and hospital staff.</li>
+</ul>
+
+<h3>Key Features</h3>
+
+<h4>1. User Authentication</h4>
+<p>
+    Provides registration, login, logout, and role-based access for patients, doctors, and administrators.
+</p>
+
+<h4>2. Doctor Management</h4>
+<p>
+    Administrators can add doctors, manage their profiles, assign departments, and maintain doctor availability schedules.
+</p>
+
+<h4>3. Patient Management</h4>
+<p>
+    Patients can create profiles, update their contact details, and view their appointment history.
+</p>
+
+<h4>4. Appointment Booking</h4>
+<p>
+    Patients can search for doctors by specialization, view available appointment slots, and book appointments online.
+</p>
+
+<h4>5. Appointment Management</h4>
+<p>
+    Patients can view or cancel appointments according to hospital policies. Doctors can review their schedules and update appointment statuses.
+</p>
+
+<h4>6. Department Management</h4>
+<p>
+    The system organizes doctors into departments such as Cardiology, Dermatology, Orthopedics, Pediatrics, and General Medicine.
+</p>
+
+<h4>7. Appointment History</h4>
+<p>
+    Patients can view previous and upcoming appointments, while authorized doctors can access relevant patient information for their appointments.
+</p>
+
+<h4>8. Administrative Dashboard</h4>
+<p>
+    Administrators can manage users, doctors, departments, appointment records, and system activities through the Django administration interface.
+</p>
+
+<h3>Technologies Used</h3>
+
+<ul>
+    <li><strong>Backend:</strong> Python and Django</li>
+    <li><strong>Frontend:</strong> HTML, CSS, JavaScript, and Bootstrap 5</li>
+    <li><strong>Database:</strong> SQLite / PostgreSQL</li>
+    <li><strong>Administration:</strong> Django Admin</li>
+    <li><strong>Optional API:</strong> Django REST Framework</li>
+</ul>
+
+<h3>Conclusion</h3>
+
+<p>
+    MediCare aims to simplify hospital appointment scheduling and patient management by bringing doctor information, appointment booking, patient profiles, and scheduling workflows into a single web application. It helps patients access appointment services conveniently while enabling doctors and administrators to manage hospital operations more efficiently.
+</p>
+--abc
+Content-Disposition: form-data; name="documentation"; filename="medicaredoc.pdf"
+Content-Type: application/pdf
+
+< C:\Users\Saino\Downloads\medicaredoc.pdf
+--abc--
+
+### Retrive projects using UUID
+GET http://127.0.0.1:8000/projects/48f3f9b2-ada0-4aab-812b-fe8bd38fea4d/
+
+### UPDATE a project
+PATCH  http://127.0.0.1:8000/projects/48f3f9b2-ada0-4aab-812b-fe8bd38fea4d/
+Content-Type: multipart/form-data ; boundary=abc
+
+--abc
+Content-Disposition: form-data; name="title"
+
+MediCare - Skill bridge
+--abc
+
+### DELETE projects a using UUID
+DELETE http://127.0.0.1:8000/projects/48f3f9b2-ada0-4aab-812b-fe8bd38fea4d/

@@ -1,0 +1,41 @@
+setup_database
+
+
+python manage.py setup_database
+MySQL administrator username [root]: root
+MySQL administrator password: password123
+Host allowed for the application user [localhost]: localhost
+Database 'project_planner_db' and user 'projectplanneradmin' are ready; all database privileges were granted and DB_PASSWORD was saved to .env.
+(env) PS C:\Users\Saino\Desktop\Luminar\django rest project\project-Planner\planner> 
+
+-------------------------------------------------------------------------------------
+
+py manage.py makemigrations 
+py manage.py migrate  
+
+py manage.py migrate authentication
+
+-------------------------------------------------------------------------------------
+
+id manipulation eg, cakes/1/
+
+logging  createdate  updatedate 
+
+active status  online/offline
+
+uuid unique identifiers codes -------- hexadcimal  0-10 A-F
+
+--------------------------------------------------------------------------------------
+Title
+
+descriptions
+
+documents
+---------------------------------------------------------------------------------------
+
+speed up chyan ntho import chythe?
+
+
+APIVIEW     ------->  GENERICS  ????
+
+
