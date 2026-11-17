@@ -12,7 +12,14 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         fields = ['username','email','password','role']
 
-        write_only_fields = ['password']     #(write only)
 
-        read_only_fields = ['email']   
+        # write_only_fields = ['password']     #(write only)
+        
+        extra_kwargs = {
+
+            'password': {'write_only':True} 
+        }
+
+
+        read_only_fields = ['email'] 
 

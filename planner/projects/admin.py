@@ -7,3 +7,7 @@ from . import models
 
 admin.site.register(models.Project)
 
+admin.site.register(models.AssignedProject)
+
+admin.site.register(models.Task)
+

@@ -1,0 +1,36 @@
+75874899-26b4-464c-8758-4d2c4ecb4942
+### listing all projects
+GET http://127.0.0.1:8000/assigned-projects/
+
+
+### create an assigned projects
+POST  http://127.0.0.1:8000/assigned-projects/
+Content-Type: application/json
+
+{
+    "project":2,
+    "coordinator":34,
+    "developers":[36,39,43],
+    "duration":6,
+    "start_date" : "2026-11-11",
+    "tentative_end_date":"2027-05-11"
+}
+
+### retrive an assigned projects
+GET http://127.0.0.1:8000/assigned-projects//
+
+
+
+
+
+
+### UPDATE an assigned projects
+PATCH  http://127.0.0.1:8000/assigned-projects/75874899-26b4-464c-8758-4d2c4ecb4942/
+Content-Type: application/json
+
+{
+    "duration":8
+}
+
+### DELETE an assigned projects
+DELETE  http://127.0.0.1:8000/assigned-projects/75874899-26b4-464c-8758-4d2c4ecb4942/

@@ -8,6 +8,18 @@ from .serializers import ProjectSerializer
 
 from authentication.models import Profile
 
+from . models import AssignedProject,Task
+
+from .serializers import AssignedProjectSerializer,TaskSerializer
+
+from rest_framework.views import APIView
+
+from rest_framework.response import Response
+
+from planner.utils import generate_tasks
+
+from django.db import transaction
+
 # Create your views here.  
 
 class ProjectListCreateView(ListCreateAPIView):     #To create LIST AND SERIALIZERS
@@ -35,3 +47,125 @@ class ProjectRetriveUpdateDestoryView(RetrieveUpdateDestroyAPIView):
         instance.active_status = False
 
         instance.save() #manually update chyunnu
+
+
+
+class AssignedProjectListCreateView(ListCreateAPIView):
+                                                # one to one                          many to many 
+    queryset = AssignedProject.objects.all().select_related('project','coordinator').prefetch_related('developers')   #code effiecnt akan?
+ 
+    # n+one query problem ? 
+
+    serializer_class = AssignedProjectSerializer
+
+
+class AssignedProjectRetriveUpdateDestoryView(RetrieveUpdateDestroyAPIView):
+
+    lookup_field = 'uuid'
+
+    queryset = AssignedProject.objects.filter(active_status=True).select_related('project','coordinator').prefetch_related('developers')   #code effiecnt akan?
+ 
+    # n+one query problem ? 
+
+    serializer_class = AssignedProjectSerializer
+
+
+    # put means all update 
+
+    # patch means Parsel update
+
+    # permanent delete agaruth active status false akanam delete chyumbo
+
+    def perform_destroy(self, instance):  #instanse 
+        
+        instance.active_status = False
+
+        instance.save() #manually update chyunnu
+
+class TaskListCreateView(ListCreateAPIView):
+
+    def get_queryset(self):
+
+        uuid = self.request.query_params.get('project')
+
+        #taking given data using post method ----- self.request.data
+        # 
+        # Task.objects.filter(assigned_Project__uuid='uuid')
+
+        # Reverse Pickup-------
+
+
+        if uuid:
+
+            assigned_project = AssignedProject.objects.get(uuid=uuid)
+
+            # task = assigned_project.task_set.all() #revverse pickup without related name
+
+        # related name models il use akkiyal ath use akiyal mmath
+            tasks = assigned_project.assigned_task.filter(active_status=True).select_related('assigned_project','assigned_to') #revverse pickup with related name
+
+            return tasks
+        
+        return Task.objects.none()
+    
+    serializer_class = TaskSerializer
+
+
+
+class TaskProjectRetriveUpdateDestoryView(RetrieveUpdateDestroyAPIView):
+
+    lookup_field = 'uuid'
+
+    queryset = Task.objects.filter(active_status=True).select_related('assigned_project','assigned_to')   
+
+    serializer_class = TaskSerializer
+
+
+    def perform_destroy(self, instance):  
+        
+        instance.active_status = False
+
+        instance.save() #manually update chyunnu
+
+
+class TaskcreatewithAi(APIView):
+
+    def post(self,request,*args,**kwargs):
+
+        uuid = kwargs.get('uuid')
+
+        try :
+
+            assigned_project = AssignedProject.objects.get(uuid=uuid)
+
+            result = generate_tasks(assigned_project)
+
+            # print(result.tasks)
+
+            tasks = [Task(title = task.title,
+                        description = task.descrription,
+                        assigned_project=assigned_project,
+                        assigned_to__pk = task.developer_id,    #__ id enu anu meaning
+                        priority = task.prority) for task in result.tasks] 
+
+
+            with transaction.atomic():
+
+                Task.objects.bulk_create(tasks)     #(bulk save akan)
+
+                data = {'msg':'Tasks assigned successfully'}
+
+            # task.save()
+
+            return Response(status=200)
+
+        except Exception as e:
+
+            print(e)
+
+
+            data= {'msg':'Failed to create Tasks'}
+
+            return Response(data,status=400)
+
+

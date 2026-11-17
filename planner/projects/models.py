@@ -11,7 +11,7 @@ class BaseClass(models.Model):
 
     active_status = models.BooleanField(default=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)  #to impliment 'now' from MySQL
+    created_at = models.DateTimeField(auto_now_add=True)  #to implement 'now' from MySQL
 
     # auto_now_add=  once create time cannot use when update
     
@@ -54,10 +54,23 @@ class AssignedProject(BaseClass):   #to assign dev or other users or fields
 
     start_date = models.DateField()
 
-    tentative_end_date = models.Dat
+    tentative_end_date = models.DateField()
+
+    project_completed = models.BooleanField(default=False)
+
+    class Meta:
+
+        verbose_name = 'Assigned Projects'
+
+        verbose_name_plural = 'Assigned Projects'
 
 
-#   Project reladed assign egane edukam? 
+    def __str__(self):
+
+        return f'{self.project.title}-{self.coordinator.first_name}'
+
+
+#   Project related assign egane edukam? 
 
 # project = record
 
@@ -65,4 +78,46 @@ class AssignedProject(BaseClass):   #to assign dev or other users or fields
 
 # project.assignedProject ----> reverse pickup
 
-# related name --> to name the assiggnedProject
+# related name --> to name the assignedProject
+
+class PriorityChoice(models.TextChoices):
+
+    LOW = 'Low','Low'
+
+    MEDIUM = 'Medium','Medium'
+
+    HIGH = 'High','High'
+
+class Task(BaseClass):
+
+    title = models.CharField(max_length=255)
+
+    description = models.TextField()
+
+    assigned_project = models.ForeignKey('AssignedProject',on_delete=models.PROTECT,related_name='assigned_task')
+
+    assigned_to = models.ForeignKey('authentication.Profile',on_delete=models.PROTECT)
+
+    priority = models.CharField(max_length=10,choices=PriorityChoice.choices)
+
+    duration = models.TimeField(null=True,blank=True)
+
+    start_date = models.DateField(null=True,blank=True)
+
+    end_date = models.DateField(null=True,blank=True)
+
+    task_completed = models.BooleanField(default=True)
+
+    class Meta:
+
+        verbose_name = 'Task'
+
+        verbose_name_plural = 'Task'
+
+    def __str__(self):
+
+        return f'{self.title}-{self.assigned_to.first_name}'
+
+
+
+

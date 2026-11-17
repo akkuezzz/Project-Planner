@@ -40,4 +40,7 @@ class Profile(AbstractUser):
 
     def __str__(self):
 
-        return self.first_name if self.first_name else self.username
+
+
+        return f'{self.first_name}-{self.tech}'
+        # return self.first_name if self.first_name else self.username

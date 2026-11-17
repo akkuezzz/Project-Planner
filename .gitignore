@@ -70,3 +70,7 @@ desktop.ini
 # media
 
 *media
+
+# Credentials
+*credentials.txt
+*credential.txt

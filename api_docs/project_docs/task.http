@@ -1,0 +1,35 @@
+### listing all TASK
+GET http://127.0.0.1:8000/tasks/?project=75874899-26b4-464c-8758-4d2c4ecb4942
+
+
+### create a task
+POST  http://127.0.0.1:8000/tasks/
+Content-Type: application/json
+
+{
+    "assigned_project":1,
+    "assigned_to":36,
+    "title":"environment setup",
+    "description":"set environment and collect all credentials",
+    "priority":"Medium"
+}
+
+###Retrive Task
+GET  http://127.0.0.1:8000/tasks/192a7315-71a0-49b1-aac5-20b8541eb726/
+
+
+### UPDATE a task
+PATCH  http://127.0.0.1:8000/tasks/192a7315-71a0-49b1-aac5-20b8541eb726/
+Content-Type: application/json
+
+{
+    
+    "priority":"High"
+}
+
+
+### Delete
+DELETE http://127.0.0.1:8000/tasks/192a7315-71a0-49b1-aac5-20b8541eb726/
+
+###
+POST  http://127.0.0.1:8000/create-tasks-ai/75874899-26b4-464c-8758-4d2c4ecb4942/
