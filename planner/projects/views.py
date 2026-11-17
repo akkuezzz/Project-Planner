@@ -20,9 +20,13 @@ from planner.utils import generate_tasks
 
 from django.db import transaction
 
+from planner.pageinations import CustomPageination
+
 # Create your views here.  
 
 class ProjectListCreateView(ListCreateAPIView):     #To create LIST AND SERIALIZERS
+
+    pagination_class = CustomPageination
 
     queryset = Project.objects.filter(active_status=True)                 #objects.all  but filtered onces
 
@@ -51,6 +55,8 @@ class ProjectRetriveUpdateDestoryView(RetrieveUpdateDestroyAPIView):
 
 
 class AssignedProjectListCreateView(ListCreateAPIView):
+
+    pagination_class = CustomPageination
                                                 # one to one                          many to many 
     queryset = AssignedProject.objects.all().select_related('project','coordinator').prefetch_related('developers')   #code effiecnt akan?
  
@@ -83,6 +89,8 @@ class AssignedProjectRetriveUpdateDestoryView(RetrieveUpdateDestroyAPIView):
         instance.save() #manually update chyunnu
 
 class TaskListCreateView(ListCreateAPIView):
+
+    pagination_class = CustomPageination
 
     def get_queryset(self):
 
@@ -143,10 +151,10 @@ class TaskcreatewithAi(APIView):
             # print(result.tasks)
 
             tasks = [Task(title = task.title,
-                        description = task.descrription,
+                        description = task.description,
                         assigned_project=assigned_project,
-                        assigned_to__pk = task.developer_id,    #__ id enu anu meaning
-                        priority = task.prority) for task in result.tasks] 
+                        assigned_to_id = task.developer_id,    #__ id enu anu meaning
+                        priority = task.priority) for task in result.tasks] 
 
 
             with transaction.atomic():
@@ -157,7 +165,7 @@ class TaskcreatewithAi(APIView):
 
             # task.save()
 
-            return Response(status=200)
+                return Response(status=200)
 
         except Exception as e:
 

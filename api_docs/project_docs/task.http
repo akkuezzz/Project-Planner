@@ -33,3 +33,7 @@ DELETE http://127.0.0.1:8000/tasks/192a7315-71a0-49b1-aac5-20b8541eb726/
 
 ###
 POST  http://127.0.0.1:8000/create-tasks-ai/75874899-26b4-464c-8758-4d2c4ecb4942/
+
+
+### page innation 
+GET http://127.0.0.1:8000/tasks/?page=1&project=75874899-26b4-464c-8758-4d2c4ecb4942

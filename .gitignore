@@ -74,3 +74,5 @@ desktop.ini
 # Credentials
 *credentials.txt
 *credential.txt
+
+/api_docs
